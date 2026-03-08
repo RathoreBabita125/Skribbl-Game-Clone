@@ -1,0 +1,106 @@
+.player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.player-row.me {
+  border-color: var(--accent-3);
+  background: rgba(0, 212, 170, 0.05);
+}
+
+.player-row.drawing {
+  border-color: var(--accent-2);
+  background: rgba(245, 166, 35, 0.07);
+  animation: pulse 2s ease infinite;
+}
+
+.player-row.guessed {
+  background: rgba(0, 212, 170, 0.05);
+}
+
+.player-rank {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.player-avatar-sm {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.player-main-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.player-name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.player-name-text {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.you-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-3);
+  margin-left: 3px;
+}
+
+.crown {
+  font-size: 12px;
+}
+
+.drawing-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+.guessed-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-3);
+}
+
+.player-score {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent-2);
+  font-family: 'Fredoka One', cursive;
+  min-width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}

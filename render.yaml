@@ -1,0 +1,30 @@
+services:
+  # Backend WebSocket server
+  - type: web
+    name: sketchly-server
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        fromService:
+          name: sketchly-client
+          type: web
+          property: host
+
+  # Frontend (static site)
+  - type: web
+    name: sketchly-client
+    env: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_SERVER_URL
+        fromService:
+          name: sketchly-server
+          type: web
+          property: host

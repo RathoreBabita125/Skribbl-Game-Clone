@@ -1,0 +1,126 @@
+.round-end-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(6px);
+}
+
+.round-end-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.round-end-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.round-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.round-end-header h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.the-word {
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.word-reveal-text {
+  color: var(--accent-3);
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'Fredoka One', cursive;
+  margin-left: 6px;
+}
+
+.leaderboard {
+  margin-bottom: 20px;
+}
+
+.leaderboard h3 {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  background: rgba(255,255,255,0.04);
+}
+
+.lb-row.rank-1 {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+.lb-row.rank-2 {
+  background: rgba(192, 192, 192, 0.08);
+}
+.lb-row.rank-3 {
+  background: rgba(205, 127, 50, 0.08);
+}
+
+.lb-rank {
+  font-size: 20px;
+  width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.lb-name {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-score {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-2);
+  font-family: 'Fredoka One', cursive;
+}
+
+.next-round-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+}

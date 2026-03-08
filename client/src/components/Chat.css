@@ -1,0 +1,97 @@
+.chat-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 4px 0;
+}
+
+.chat-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.chat-msg {
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  word-break: break-word;
+  animation: slideIn 0.2s ease forwards;
+  opacity: 0;
+}
+
+.chat-msg-chat { color: var(--text-secondary); }
+.chat-msg-guess { color: var(--text-secondary); }
+.chat-msg-system {
+  color: var(--text-muted);
+  font-style: italic;
+  background: rgba(255,255,255,0.03);
+  text-align: center;
+}
+
+.chat-msg-correct {
+  color: var(--accent-3);
+  background: rgba(0, 212, 170, 0.08);
+  font-weight: 700;
+  border-left: 3px solid var(--accent-3);
+  padding-left: 10px;
+  animation: popIn 0.3s ease forwards;
+}
+
+.chat-msg-close {
+  color: var(--accent-2);
+  background: rgba(245, 166, 35, 0.05);
+  font-style: italic;
+}
+
+.chat-msg.mine .chat-name {
+  font-weight: 800;
+}
+
+.sys-msg {
+  display: block;
+  font-size: 12px;
+}
+
+.chat-name {
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.chat-text {
+  color: var(--text-primary);
+}
+
+.chat-msg-correct .sys-msg {
+  font-size: 13px;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-guess-input {
+  font-size: 13px;
+  flex: 1;
+}
+
+.chat-guess-input.guessing {
+  border-color: rgba(0, 212, 170, 0.4);
+}
+
+.chat-send {
+  padding: 8px 14px;
+  font-size: 16px;
+  flex-shrink: 0;
+}

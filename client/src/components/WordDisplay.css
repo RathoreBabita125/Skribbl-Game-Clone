@@ -1,0 +1,129 @@
+.word-selection {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.word-selection h3 {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.word-options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.word-option-btn {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  text-transform: capitalize;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.word-option-btn:hover {
+  border-color: var(--accent-3);
+  background: rgba(0, 212, 170, 0.1);
+  color: var(--accent-3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2);
+}
+
+.word-waiting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  padding: 14px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  animation: pulse 1s ease infinite;
+}
+
+.word-reveal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  padding: 12px 20px;
+  background: rgba(245, 166, 35, 0.1);
+  border-radius: var(--radius);
+  border: 2px solid rgba(245, 166, 35, 0.3);
+}
+
+.draw-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.my-word {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'Fredoka One', cursive;
+}
+
+.word-hint-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px 20px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  flex-wrap: wrap;
+  min-height: 56px;
+}
+
+.hint-char {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'Fredoka One', cursive;
+  min-width: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.hint-char.blank {
+  color: var(--text-muted);
+  border-bottom: 3px solid var(--text-muted);
+  padding-bottom: 2px;
+}
+
+.hint-char.revealed {
+  color: var(--accent-3);
+  animation: popIn 0.3s ease;
+}
+
+.hint-char.space {
+  min-width: 20px;
+}
