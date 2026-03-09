@@ -26,6 +26,7 @@ const initialState = {
   lastWord: null,
   leaderboard: [],
   error: null,
+  roundEndReason: null
 };
 
 function reducer(state, action) {
@@ -144,7 +145,8 @@ function reducer(state, action) {
         gameStatus: 'round_end',
         lastWord: action.payload.word,
         leaderboard: action.payload.leaderboard,
-        players: action.payload.players
+        players: action.payload.players,
+        roundEndReason: action.payload.reason
       };
 
     case 'GAME_OVER':
@@ -228,8 +230,8 @@ export function GameProvider({ children }) {
   }, [socket]);
 
   const actions = {
-    createRoom:  useCallback((playerName, settings, isPrivate) => socket?.emit('create_room', { playerName, settings, isPrivate }), [socket]),
-    joinRoom:    useCallback((roomId, playerName) => socket?.emit('join_room', { roomId, playerName }), [socket]),
+    createRoom:  useCallback((playerName, settings, isPrivate, avatar) => socket?.emit('create_room', { playerName, settings, isPrivate, avatar }), [socket]),
+    joinRoom:    useCallback((roomId, playerName, avatar) => socket?.emit('join_room', { roomId, playerName, avatar }), [socket]),
     startGame:   useCallback(() => socket?.emit('start_game'), [socket]),
     toggleReady: useCallback(() => socket?.emit('player_ready'), [socket]),
     chooseWord:  useCallback((word) => socket?.emit('word_chosen', { word }), [socket]),

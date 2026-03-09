@@ -59,13 +59,14 @@ io.on('connection', (socket) => {
   console.log(`[Socket] Connected: ${socket.id}`);
 
   // ─── Room Events ─────────────────────────────────────────────
-  socket.on('create_room', ({ playerName, settings, isPrivate }) => {
+  socket.on('create_room', ({ playerName, settings, isPrivate, avatar }) => {
     try {
       const room = new Room(playerName, settings || {}, isPrivate || false);
       room.io = io;
       rooms.set(room.id, room);
 
-      const result = room.addPlayer(socket.id, playerName);
+      // const result = room.addPlayer(socket.id, playerName);
+      const result = room.addPlayer(socket.id, playerName, avatar);
       if (result.error) {
         socket.emit('error', { message: result.error });
         return;
@@ -90,7 +91,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('join_room', ({ roomId, playerName }) => {
+  socket.on('join_room', ({ roomId, playerName, avatar }) => {
     try {
       const room = rooms.get(roomId?.toUpperCase());
       if (!room) {
@@ -98,7 +99,8 @@ io.on('connection', (socket) => {
         return;
       }
 
-      const result = room.addPlayer(socket.id, playerName);
+      // const result = room.addPlayer(socket.id, playerName);
+      const result = room.addPlayer(socket.id, playerName, avatar);
       if (result.error) {
         socket.emit('error', { message: result.error });
         return;

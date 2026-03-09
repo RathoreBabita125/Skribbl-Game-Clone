@@ -27,9 +27,9 @@ export default function HomePage() {
     if (c) { setRoomCode(c.toUpperCase()); setShowJoin(true); }
   }, []);
 
-  const play    = () => playerName.trim() && actions.createRoom(playerName.trim(), settings, false);
-  const create  = () => { if (!playerName.trim()) return; actions.createRoom(playerName.trim(), settings, true); setShowPrivate(false); };
-  const join    = () => { if (!playerName.trim() || !roomCode.trim()) return; actions.joinRoom(roomCode.trim().toUpperCase(), playerName.trim()); setShowJoin(false); };
+  const play    = () => playerName.trim() && actions.createRoom(playerName.trim(), settings, false, { avatarIdx: selIdx, eyeIdx, mouthIdx });
+  const create  = () => { if (!playerName.trim()) return; actions.createRoom(playerName.trim(), settings, true, { avatarIdx: selIdx, eyeIdx, mouthIdx }); setShowPrivate(false); };
+  const join    = () => { if (!playerName.trim() || !roomCode.trim()) return; actions.joinRoom(roomCode.trim().toUpperCase(), playerName.trim(), { avatarIdx: selIdx, eyeIdx, mouthIdx }); setShowJoin(false); };
 
   const adj = (setter, total, dir) => setter(i => (i + dir + total) % total);
   const randomize = () => {
@@ -154,6 +154,7 @@ export default function HomePage() {
             <h2>Join Room</h2>
             <button className="modal-x" onClick={()=>setShowJoin(false)}>✕</button>
             <input
+              id="join-name-input"
               className="name-input"
               placeholder="Room code..."
               value={roomCode}

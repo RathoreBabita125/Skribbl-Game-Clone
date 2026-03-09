@@ -12,23 +12,75 @@ const COLORS = [
 
 const BRUSH_SIZES = [3, 6, 12, 20, 30];
 
+// Flood fill algorithm
+function floodFill(ctx, startX, startY, fillColor) {
+  const canvas = ctx.canvas;
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+
+  const toIndex = (x, y) => (y * canvas.width + x) * 4;
+
+  const startIdx = toIndex(Math.floor(startX), Math.floor(startY));
+  const startR = data[startIdx];
+  const startG = data[startIdx + 1];
+  const startB = data[startIdx + 2];
+  const startA = data[startIdx + 3];
+
+  // Parse fill color
+  const tmp = document.createElement('canvas');
+  tmp.width = tmp.height = 1;
+  const tmpCtx = tmp.getContext('2d');
+  tmpCtx.fillStyle = fillColor;
+  tmpCtx.fillRect(0, 0, 1, 1);
+  const [fillR, fillG, fillB, fillA] = tmpCtx.getImageData(0, 0, 1, 1).data;
+
+  // If clicking same color, do nothing
+  if (startR === fillR && startG === fillG && startB === fillB && startA === fillA) return;
+
+  const matchesStart = (idx) =>
+    data[idx]     === startR &&
+    data[idx + 1] === startG &&
+    data[idx + 2] === startB &&
+    data[idx + 3] === startA;
+
+  const stack = [[Math.floor(startX), Math.floor(startY)]];
+  const visited = new Uint8Array(canvas.width * canvas.height);
+
+  while (stack.length) {
+    const [x, y] = stack.pop();
+    if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) continue;
+    const idx = toIndex(x, y);
+    const visitIdx = y * canvas.width + x;
+    if (visited[visitIdx]) continue;
+    if (!matchesStart(idx)) continue;
+
+    visited[visitIdx] = 1;
+    data[idx]     = fillR;
+    data[idx + 1] = fillG;
+    data[idx + 2] = fillB;
+    data[idx + 3] = fillA;
+
+    stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+}
+
 export default function DrawingCanvas({ isDrawer }) {
   const canvasRef = useRef(null);
-  const overlayCanvasRef = useRef(null);
   const isDrawingRef = useRef(false);
   const lastPosRef = useRef(null);
-  const currentStrokeRef = useRef([]);
   const { state, actions } = useGame();
   const { socket } = useSocket();
 
   const [color, setColor] = useState('#000000');
   const [brushSize, setBrushSize] = useState(6);
-  const [isEraser, setIsEraser] = useState(false);
-  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [tool, setTool] = useState('brush'); // 'brush' | 'eraser' | 'fill'
 
+  const isEraser = tool === 'eraser';
+  const isFill = tool === 'fill';
   const activeColor = isEraser ? '#ffffff' : color;
 
-  // Get canvas context
   const getCtx = () => canvasRef.current?.getContext('2d');
 
   // Initialize canvas
@@ -58,7 +110,6 @@ export default function DrawingCanvas({ isDrawer }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Draw from received stroke data
   const applyStroke = useCallback((data) => {
     const ctx = getCtx();
     if (!ctx) return;
@@ -85,40 +136,26 @@ export default function DrawingCanvas({ isDrawer }) {
     } else if (data.type === 'end') {
       ctx.stroke();
       lastPosRef.current = null;
+    } else if (data.type === 'fill') {
+      floodFill(ctx, data.x, data.y, data.color);
     }
   }, []);
 
-  // Replay all strokes (for undo & new players)
   const replayStrokes = useCallback((strokes) => {
     const canvas = canvasRef.current;
     const ctx = getCtx();
     if (!canvas || !ctx) return;
-
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     lastPosRef.current = null;
-
     strokes.forEach(stroke => applyStroke(stroke));
   }, [applyStroke]);
 
-  useEffect(() => {
-    if (!socket) return;
-  }, [socket]);
-
-  // Handle canvas_replay 
-  useEffect(() => {
-    if (state.strokes !== undefined && !isDrawer) {
-      
-    }
-  }, [state.strokes, isDrawer]);
-
-  // Direct socket listener for draw_data
+  // Socket listeners
   useEffect(() => {
     if (!socket) return;
 
-    const handleDrawData = (data) => {
-      applyStroke(data);
-    };
+    const handleDrawData = (data) => applyStroke(data);
 
     const handleCanvasCleared = () => {
       const canvas = canvasRef.current;
@@ -129,9 +166,7 @@ export default function DrawingCanvas({ isDrawer }) {
       }
     };
 
-    const handleCanvasReplay = (data) => {
-      replayStrokes(data.strokes);
-    };
+    const handleCanvasReplay = (data) => replayStrokes(data.strokes);
 
     socket.on('draw_data', handleDrawData);
     socket.on('canvas_cleared', handleCanvasCleared);
@@ -156,14 +191,12 @@ export default function DrawingCanvas({ isDrawer }) {
     }
   }, [state.gameStatus]);
 
-  // Mouse/touch helpers
   const getPos = (e) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-
     if (e.touches) {
       return {
         x: (e.touches[0].clientX - rect.left) * scaleX,
@@ -179,24 +212,32 @@ export default function DrawingCanvas({ isDrawer }) {
   const startDrawing = useCallback((e) => {
     if (!isDrawer) return;
     e.preventDefault();
-    isDrawingRef.current = true;
     const pos = getPos(e);
 
+    if (isFill) {
+      // Apply fill locally
+      const ctx = getCtx();
+      if (ctx) floodFill(ctx, pos.x, pos.y, activeColor);
+      // Broadcast as a fill stroke so server stores it & others see it
+      const fillData = { type: 'fill', x: pos.x, y: pos.y, color: activeColor };
+      actions.drawStart(fillData);
+      actions.drawEnd();
+      return;
+    }
+
+    isDrawingRef.current = true;
     const strokeData = { x: pos.x, y: pos.y, color: activeColor, size: brushSize };
     applyStroke({ type: 'start', ...strokeData });
     actions.drawStart(strokeData);
-
-    currentStrokeRef.current = [{ type: 'start', ...strokeData }];
-  }, [isDrawer, activeColor, brushSize, applyStroke, actions]);
+  }, [isDrawer, isFill, activeColor, brushSize, applyStroke, actions]);
 
   const draw = useCallback((e) => {
-    if (!isDrawer || !isDrawingRef.current) return;
+    if (!isDrawer || !isDrawingRef.current || isFill) return;
     e.preventDefault();
     const pos = getPos(e);
-
     applyStroke({ type: 'move', x: pos.x, y: pos.y });
     actions.drawMove({ x: pos.x, y: pos.y });
-  }, [isDrawer, applyStroke, actions]);
+  }, [isDrawer, isFill, applyStroke, actions]);
 
   const endDrawing = useCallback(() => {
     if (!isDrawer || !isDrawingRef.current) return;
@@ -215,16 +256,12 @@ export default function DrawingCanvas({ isDrawer }) {
     actions.clearCanvas();
   };
 
-  const handleUndo = () => {
-    actions.undoDraw();
-  };
-
   return (
     <div className="drawing-area">
       <div className="canvas-wrapper">
         <canvas
           ref={canvasRef}
-          className={`drawing-canvas ${isDrawer ? 'can-draw' : ''}`}
+          className={`drawing-canvas ${isDrawer ? 'can-draw' : ''} ${isFill ? 'fill-cursor' : ''}`}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={endDrawing}
@@ -253,9 +290,9 @@ export default function DrawingCanvas({ isDrawer }) {
               {COLORS.map(c => (
                 <button
                   key={c}
-                  className={`color-btn ${color === c && !isEraser ? 'selected' : ''}`}
+                  className={`color-btn ${color === c && tool === 'brush' ? 'selected' : ''}`}
                   style={{ background: c, border: c === '#ffffff' ? '1px solid #ddd' : 'none' }}
-                  onClick={() => { setColor(c); setIsEraser(false); }}
+                  onClick={() => { setColor(c); setTool('brush'); }}
                 />
               ))}
             </div>
@@ -267,10 +304,10 @@ export default function DrawingCanvas({ isDrawer }) {
               {BRUSH_SIZES.map(size => (
                 <button
                   key={size}
-                  className={`size-btn ${brushSize === size && !isEraser ? 'selected' : ''}`}
-                  onClick={() => { setBrushSize(size); setIsEraser(false); }}
+                  className={`size-btn ${brushSize === size && tool === 'brush' ? 'selected' : ''}`}
+                  onClick={() => { setBrushSize(size); setTool('brush'); }}
                 >
-                  <div className="size-dot" style={{ width: size, height: size, background: isEraser ? '#aaa' : color, maxWidth: 30, maxHeight: 30, minWidth: 3, minHeight: 3 }} />
+                  <div className="size-dot" style={{ width: size, height: size, background: tool === 'eraser' ? '#aaa' : color, maxWidth: 30, maxHeight: 30, minWidth: 3, minHeight: 3 }} />
                 </button>
               ))}
             </div>
@@ -279,20 +316,25 @@ export default function DrawingCanvas({ isDrawer }) {
           {/* Tools */}
           <div className="toolbar-section tools-section">
             <button
-              className={`tool-btn ${isEraser ? 'selected' : ''}`}
-              onClick={() => setIsEraser(!isEraser)}
+              className={`tool-btn ${tool === 'fill' ? 'selected' : ''}`}
+              onClick={() => setTool(tool === 'fill' ? 'brush' : 'fill')}
+              title="Fill"
+            ><img src="/fill.gif" alt="fill" /></button>
+            <button
+              className={`tool-btn ${tool === 'eraser' ? 'selected' : ''}`}
+              onClick={() => setTool(tool === 'eraser' ? 'brush' : 'eraser')}
               title="Eraser"
-            ><img src="/size.gif" alt="erasor" /></button>
+            ><img src="/size.gif" alt="eraser" /></button>
             <button
               className="tool-btn"
-              onClick={handleUndo}
+              onClick={actions.undoDraw}
               title="Undo"
             ><img src="/undo.gif" alt="undo" /></button>
             <button
               className="tool-btn danger"
               onClick={handleClear}
               title="Clear canvas"
-            ><img src="/clear.gif" alt="undo" /></button>
+            ><img src="/clear.gif" alt="clear" /></button>
           </div>
 
           {/* Current color indicator */}

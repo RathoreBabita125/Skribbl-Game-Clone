@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGame } from '../context/GameContext';
-import PlayerAvatar from './PlayerAvatar';
+import { Avatar } from './AvatarRow';
 import './PlayerList.css';
 
 export default function PlayerList() {
@@ -23,7 +23,12 @@ export default function PlayerList() {
             <div className="player-rank">#{i + 1}</div>
             
             <div className="player-avatar-sm">
-              <PlayerAvatar avatarIdx={player.avatar || 0} size={36} />
+              <Avatar
+                avatarIdx={player.avatar?.avatarIdx ?? 0}
+                eyeIdx={player.avatar?.eyeIdx ?? 0}
+                mouthIdx={player.avatar?.mouthIdx ?? 0}
+                size={36}
+              />
             </div>
 
             <div className="player-main-info">
@@ -32,7 +37,6 @@ export default function PlayerList() {
                   {player.name}
                   {isMe && <span className="you-tag">(you)</span>}
                 </span>
-               
               </div>
               {isDrawer && (
                 <span className="drawing-tag"> Drawing...</span>

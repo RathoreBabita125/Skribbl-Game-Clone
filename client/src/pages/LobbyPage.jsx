@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useGame } from '../context/GameContext';
 import './LobbyPage.css';
 
-import PlayerAvatar from '../components/PlayerAvatar';
+import { Avatar } from '../components/AvatarRow';
 
 export default function LobbyPage() {
   const { state, actions } = useGame();
@@ -85,7 +85,12 @@ export default function LobbyPage() {
                 {players.map((player, i) => (
                   <div key={player.id} className={`player-card ${player.id === myPlayer?.id ? 'me' : ''}`} style={{ animationDelay: `${i * 0.05}s` }}>
                     <div className="player-avatar">
-                      <PlayerAvatar avatarIdx={player.avatar || 0} size={52} />
+                      <Avatar
+                        avatarIdx={player.avatar?.avatarIdx ?? 0}
+                        eyeIdx={player.avatar?.eyeIdx ?? 0}
+                        mouthIdx={player.avatar?.mouthIdx ?? 0}
+                        size={52}
+                      />
                     </div>
                     <div className="player-info">
                       <span className="player-name">

@@ -27,7 +27,8 @@ export default function GamePage() {
     drawTime,
     lastWord,
     leaderboard,
-    players
+    players,
+    roundEndReason
   } = state;
 
   const isDrawer = myPlayer?.id === currentDrawerId;
@@ -126,6 +127,7 @@ export default function GamePage() {
             leaderboard={leaderboard}
             currentRound={currentRound}
             totalRounds={totalRounds}
+            reason={roundEndReason}
           />
         )}
 

@@ -27,8 +27,8 @@ class Room {
     return code;
   }
 
-  addPlayer(socketId, playerName) {
-    if (this.players.size >= this.game.settings.maxPlayers) {
+  addPlayer(socketId, playerName, avatar) {
+    if (this.players.size >= this.game.settings.maxPlayers) {s
       return { error: 'Room is full' };
     }
     if (this.status === 'playing') {
@@ -36,7 +36,8 @@ class Room {
     }
 
     const id = uuidv4();
-    const player = new Player(id, playerName, socketId);
+    // const player = new Player(id, playerName, socketId);
+    const player = new Player(id, playerName, socketId, avatar);
 
     // First player is host
     if (this.players.size === 0) {

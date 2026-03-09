@@ -85,7 +85,7 @@
 /* Eyes & mouth*/
 .av-face-sprite {
   position: absolute;
-  mix-blend-mode: multiply;
-  filter: brightness(0);
+  /* mix-blend-mode: multiply; */
+  /* filter: brightness(0); */
   image-rendering: pixelated;
 }
