@@ -1,0 +1,91 @@
+.avrow-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avrow {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 26px 6px 10px;
+}
+
+/* Individual avatar */
+.avrow-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.18s cubic-bezier(.34, 1.56, .64, 1),
+  filter 0.18s ease;
+}
+
+.avrow-slot:hover {
+  transform: translateY(-6px) scale(1.12);
+  z-index: 2;
+}
+
+.avrow-slot.avrow-selected {
+  transform: translateY(-10px) scale(1.2);
+  z-index: 3;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+.avrow-crown {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avrow-crown img {
+  width: 24px;
+  height: auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+
+/*  Avatar body */
+.av-body-wrap {
+  position: relative;
+  width: var(--av-size);
+  height: var(--av-size);
+  flex-shrink: 0;
+}
+
+/* Shared sprite base */
+.av-sprite {
+  width:               var(--spr-wh);
+  height:              var(--spr-wh);
+  flex-shrink:         0;
+  background-image:    var(--spr-url);
+  background-size:     var(--spr-size) var(--spr-size);
+  background-position: var(--spr-x) var(--spr-y);
+  background-repeat:   no-repeat;
+  image-rendering:     pixelated;
+}
+
+/* Color body */
+.av-body-sprite {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Eyes & mouth*/
+.av-face-sprite {
+  position: absolute;
+  mix-blend-mode: multiply;
+  filter: brightness(0);
+  image-rendering: pixelated;
+}

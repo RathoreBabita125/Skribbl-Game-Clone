@@ -64,7 +64,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Toolbar */
+
 .toolbar {
   display: flex;
   align-items: center;

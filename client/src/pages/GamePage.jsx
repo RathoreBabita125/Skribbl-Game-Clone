@@ -40,100 +40,97 @@ export default function GamePage() {
     : 'var(--accent-1)';
 
   return (
-    <div className="game-page bg-dots">
-      <div className="game-bg-gradient" />
+    <div className='game-page '>
+      <div className="game-page bg-dots">
+        <div className="game-bg-gradient" />
 
-      {/* Header */}
-      <header className="game-header">
-        <div className="game-logo">
-          <span>✏️</span>
-          <span>Sketchly</span>
-        </div>
+        {/* Header */}
+        <header className="game-header">
+          <div className="game-logo">
+            <img src="./logo.gif" alt="" />
+          </div>
 
-        <div className="game-status-bar">
-          {currentRound > 0 && (
-            <div className="round-indicator">
-              Round <strong>{currentRound}</strong> / {totalRounds}
-            </div>
-          )}
-
-          {gameStatus === 'drawing' && (
-            <div className="timer-wrapper">
-              <div
-                className="timer-circle"
-                style={{
-                  background: `conic-gradient(${timerColor} ${timerPercent * 3.6}deg, rgba(255,255,255,0.08) 0deg)`
-                }}
-              >
-                <span className="timer-num" style={{ color: timerColor }}>
-                  {timeLeft}
-                </span>
+          <div className="game-status-bar">
+            {currentRound > 0 && (
+              <div className="round-indicator">
+                Round <strong>{currentRound}</strong> / {totalRounds}
               </div>
-            </div>
-          )}
+            )}
 
-          {gameStatus === 'drawing' && (
-            <div className="drawer-indicator">
-              {isDrawer
-                ? <span className="drawing-you">✏️ You are drawing!</span>
-                : <span>✏️ <strong>{currentDrawerName}</strong> is drawing</span>
-              }
+            {gameStatus === 'drawing' && (
+              <div className="timer-wrapper">
+                <div className="timer-circle">
+                  <img src="/clock.gif" alt="clock" />
+                  <span className="timer-num" style={{ color: timerColor }}>
+                    {timeLeft}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {gameStatus === 'drawing' && (
+              <div className="drawer-indicator">
+                {isDrawer
+                  ? <span className="drawing-you"><img src="/how.gif" alt="pen" /> You are drawing!</span>
+                  : <span><img src="/how.gif" alt="pen" /> <strong>{currentDrawerName}</strong> is drawing</span>
+                }
+              </div>
+            )}
+          </div>
+
+          <button className="btn btn-secondary game-leave-btn" onClick={actions.leaveRoom}>
+            Leave
+          </button>
+        </header>
+
+        {/* Main layout */}
+        <div className="game-layout">
+          {/* Left: Players */}
+          <div className="game-sidebar game-sidebar-left card">
+            <div className="sidebar-title">Players</div>
+            <PlayerList />
+          </div>
+
+          {/* Center: Canvas + Word */}
+          <div className="game-center">
+            {/* Word display */}
+            <WordDisplay
+              wordHint={wordHint}
+              myWord={myWord}
+              isDrawer={isDrawer}
+              gameStatus={gameStatus}
+              wordOptions={wordOptions}
+              onChooseWord={actions.chooseWord}
+              drawerName={currentDrawerName}
+            />
+
+            {/* Canvas */}
+            <div className="canvas-container">
+              <DrawingCanvas isDrawer={isDrawer} />
             </div>
-          )}
+          </div>
+
+          {/* Right: Chat */}
+          <div className="game-sidebar game-sidebar-right card">
+            <div className="sidebar-title">
+              {gameStatus === 'drawing' && !isDrawer ? '💬 Guess the word!' : '💬 Chat'}
+            </div>
+            <Chat />
+          </div>
         </div>
 
-        <button className="btn btn-secondary game-leave-btn" onClick={actions.leaveRoom}>
-          Leave
-        </button>
-      </header>
-
-      {/* Main layout */}
-      <div className="game-layout">
-        {/* Left: Players */}
-        <div className="game-sidebar game-sidebar-left card">
-          <div className="sidebar-title">Players</div>
-          <PlayerList />
-        </div>
-
-        {/* Center: Canvas + Word */}
-        <div className="game-center">
-          {/* Word display */}
-          <WordDisplay
-            wordHint={wordHint}
-            myWord={myWord}
-            isDrawer={isDrawer}
-            gameStatus={gameStatus}
-            wordOptions={wordOptions}
-            onChooseWord={actions.chooseWord}
-            drawerName={currentDrawerName}
+        {/* Overlays */}
+        {gameStatus === 'round_end' && (
+          <RoundEnd
+            word={lastWord}
+            leaderboard={leaderboard}
+            currentRound={currentRound}
+            totalRounds={totalRounds}
           />
+        )}
 
-          {/* Canvas */}
-          <div className="canvas-container">
-            <DrawingCanvas isDrawer={isDrawer} />
-          </div>
-        </div>
-
-        {/* Right: Chat */}
-        <div className="game-sidebar game-sidebar-right card">
-          <div className="sidebar-title">
-            {gameStatus === 'drawing' && !isDrawer ? '💬 Guess the word!' : '💬 Chat'}
-          </div>
-          <Chat />
-        </div>
+        {gameStatus === 'game_over' && <GameOver />}
       </div>
-
-      {/* Overlays */}
-      {gameStatus === 'round_end' && (
-        <RoundEnd
-          word={lastWord}
-          leaderboard={leaderboard}
-          currentRound={currentRound}
-          totalRounds={totalRounds}
-        />
-      )}
-
-      {gameStatus === 'game_over' && <GameOver />}
     </div>
   );
 }

@@ -45,14 +45,13 @@
 
 .game-over-header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   position: relative;
 }
 
 .game-over-icon {
   font-size: 64px;
   display: block;
-  margin-bottom: 8px;
   animation: pulse 1.5s ease infinite;
 }
 
@@ -72,6 +71,12 @@
   gap: 8px;
   font-size: 20px;
   font-weight: 800;
+}
+
+.winner-announcement  img{
+  width: 7.5rem;
+  height: 5.5rem;
+
 }
 
 .winner-crown { font-size: 24px; }
@@ -152,9 +157,20 @@
   display: flex;
   gap: 12px;
   justify-content: center;
+  align-items: center;
+}
+
+
+.game-over-actions img{
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .play-again-btn {
   padding: 14px 32px;
   font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }

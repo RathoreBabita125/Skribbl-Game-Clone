@@ -4,14 +4,16 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  background-image: url('../../public/background.png');
+  background-repeat: repeat;
 }
 
 .game-bg-gradient {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 10% 0%, rgba(124,58,237,0.1) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(0,212,170,0.08) 0%,transparent 60%);
+    radial-gradient(ellipse 60% 40% at 10% 0%, rgba(124, 58, 237, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(0, 212, 170, 0.08) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -42,6 +44,11 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   flex-shrink: 0;
+  /* width: 20vw; */
+}
+
+.game-logo img {
+  width: 20vw;
 }
 
 .game-status-bar {
@@ -58,7 +65,7 @@
   font-weight: 600;
   color: var(--text-secondary);
   padding: 5px 14px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   border: 1px solid var(--border);
 }
@@ -72,32 +79,22 @@
   align-items: center;
 }
 
+
 .timer-circle {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  transition: background 0.5s;
 }
 
-.timer-circle::before {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  background: var(--bg-secondary);
-}
 
 .timer-num {
-  position: relative;
+  /* position: relative; */
   z-index: 1;
   font-size: 16px;
   font-weight: 800;
   font-family: 'Fredoka One', cursive;
   transition: color 0.5s;
+  position: absolute;
+  top: 25px;
+  right: 25px;
 }
 
 .drawer-indicator {
@@ -122,7 +119,7 @@
 .game-layout {
   flex: 1;
   display: grid;
-  grid-template-columns: 200px 1fr 280px;
+  grid-template-columns: 350px 1fr 300px;
   gap: 14px;
   padding: 14px;
   align-items: start;
@@ -130,7 +127,7 @@
 
 @media (max-width: 1024px) {
   .game-layout {
-    grid-template-columns: 170px 1fr 240px;
+    grid-template-columns: 240px 1fr 240px;
   }
 }
 
@@ -192,6 +189,6 @@
   display: flex;
 }
 
-.canvas-container > * {
+.canvas-container>* {
   flex: 1;
 }

@@ -22,11 +22,11 @@ export default function GameOver() {
         </div>
 
         <div className="game-over-header">
-          <div className="game-over-icon">{isWinner ? '🏆' : '🎮'}</div>
+          <div className="game-over-icon">{isWinner ? <img src="/cup.gif" alt="cup" /> : '🎮'}</div>
           <h1>Game Over!</h1>
           {winner && (
             <div className="winner-announcement">
-              <span className="winner-crown">👑</span>
+              <span className="winner-crown"><img src="/winner.gif" alt="winner" /></span>
               <span className="winner-name">{winner.name}</span>
               <span className="winner-wins">wins!</span>
             </div>
@@ -51,7 +51,7 @@ export default function GameOver() {
 
         <div className="game-over-actions">
           <button className="btn btn-primary play-again-btn" onClick={actions.leaveRoom}>
-            🏠 Back to Home
+            <img src="/home.gif" alt="" /> <div>Back to Home</div>
           </button>
         </div>
       </div>

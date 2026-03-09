@@ -88,7 +88,7 @@ export default function DrawingCanvas({ isDrawer }) {
     }
   }, []);
 
-  // Replay all strokes (for undo / new players)
+  // Replay all strokes (for undo & new players)
   const replayStrokes = useCallback((strokes) => {
     const canvas = canvasRef.current;
     const ctx = getCtx();
@@ -101,15 +101,14 @@ export default function DrawingCanvas({ isDrawer }) {
     strokes.forEach(stroke => applyStroke(stroke));
   }, [applyStroke]);
 
-  // Listen for draw events from server
   useEffect(() => {
     if (!socket) return;
   }, [socket]);
 
-  // Handle canvas_replay (undo)
+  // Handle canvas_replay 
   useEffect(() => {
     if (state.strokes !== undefined && !isDrawer) {
-      // Only replay if we got a canvas_replay event (handled via strokes in state)
+      
     }
   }, [state.strokes, isDrawer]);
 
@@ -283,17 +282,17 @@ export default function DrawingCanvas({ isDrawer }) {
               className={`tool-btn ${isEraser ? 'selected' : ''}`}
               onClick={() => setIsEraser(!isEraser)}
               title="Eraser"
-            >🧹</button>
+            ><img src="/size.gif" alt="erasor" /></button>
             <button
               className="tool-btn"
               onClick={handleUndo}
               title="Undo"
-            >↩️</button>
+            ><img src="/undo.gif" alt="undo" /></button>
             <button
               className="tool-btn danger"
               onClick={handleClear}
               title="Clear canvas"
-            >🗑️</button>
+            ><img src="/clear.gif" alt="undo" /></button>
           </div>
 
           {/* Current color indicator */}

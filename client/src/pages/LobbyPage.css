@@ -1,10 +1,14 @@
+
 .lobby-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 0 20px 40px;
   position: relative;
+  background-image: url('/background.png');
+  background-repeat: repeat;
 }
+
 
 .lobby-header {
   display: flex;
@@ -20,6 +24,7 @@
   gap: 10px;
   font-size: 28px;
 }
+
 
 .lobby-logo h1 {
   font-size: 28px;
@@ -97,6 +102,12 @@
   border-radius: 6px;
   transition: transform 0.15s;
 }
+
+.copy-btn i{
+  width: 20px;
+  height: 20px;
+  color: white;
+}
 .copy-btn:hover { transform: scale(1.2); }
 
 .invite-section {
@@ -120,16 +131,27 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  
 }
 
 .pill {
   background: rgba(255,255,255,0.07);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 5px 12px;
+  padding:5px 12px;
   font-size: 13px;
   font-weight: 600;
   color: var(--text-secondary);
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.pill img{
+  width: 28px;
+  height: 28px;
 }
 
 .players-grid {
@@ -141,7 +163,7 @@
 .player-card {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 25px;
   padding: 12px;
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
@@ -153,6 +175,7 @@
 .player-card.me {
   border-color: var(--accent-3);
   background: rgba(0, 212, 170, 0.06);
+  margin-left: 10px;
 }
 
 .player-card.empty {
@@ -237,6 +260,7 @@
   color: var(--text-secondary);
   font-size: 15px;
   font-weight: 600;
+  background-color: #1f56a9;
 }
 
 .waiting-dot {
