@@ -60,7 +60,7 @@ export default function LobbyPage() {
                 <button className="btn btn-secondary invite-link-btn" onClick={copyLink}>
                   🔗 {copied ? 'Copied!' : 'Copy Invite Link'}
                 </button>
-                {isPrivate && <span className="badge" style={{ background: 'rgba(233,69,96,0.2)', color: '#e94560' }}>🔒 Private</span>}
+                {isPrivate && <span className="badge" style={{ background: '#ffffff', color: '#0550a5' }}>  <i class="fa-solid fa-lock"></i>  <span>Private</span></span>}
               </div>
             </div>
 
@@ -122,7 +122,7 @@ export default function LobbyPage() {
                     disabled={!canStart}
                     style={{ opacity: canStart ? 1 : 0.5 }}
                   >
-                    {canStart ? '🎮 Start Game!' : `⏳ Need ${2 - players.length} more player(s) to start`}
+                    {canStart ? ' Start Game!' : ` Need ${2 - players.length} more player(s) to start`}
                   </button>
                   {!canStart && (
                     <p style={{ textAlign: 'center', color: 'var(--accent-2)', fontSize: '13px', fontWeight: 700 }}>
