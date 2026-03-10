@@ -8,8 +8,8 @@ const initialState = {
   isPrivate: false,
   roomSettings: null,
   myPlayer: null,
-  myPlayerId: null,      // stored separately so it never gets lost
-  amHost: false,         // tracked locally — true if I created the room OR got host transfer
+  myPlayerId: null,      
+  amHost: false,         
   players: [],
   gameStatus: 'idle',
   currentRound: 0,
@@ -42,7 +42,7 @@ function reducer(state, action) {
         roomSettings: action.payload.settings,
         myPlayer,
         myPlayerId: myPlayer.id,
-        amHost: true,          // creator is always host
+        amHost: true,         
         players,
         gameStatus: 'lobby',
         error: null
@@ -52,7 +52,7 @@ function reducer(state, action) {
     case 'ROOM_JOINED': {
       const players = action.payload.players;
       const myPlayer = action.payload.player;
-      // Check if server says we're host (shouldn't be for joiner, but just in case)
+      // Check if server says we're host 
       const serverSaysHost = players.find(p => p.id === myPlayer.id)?.isHost === true;
       return {
         ...state,
@@ -211,8 +211,8 @@ export function GameProvider({ children }) {
           dispatch({ type: 'CHAT_MESSAGE', payload: {
             playerId: 'system', playerName: 'System',
             text: isMe
-              ? `🎉 You guessed the word! +${data.points} pts`
-              : `✅ ${data.playerName} guessed the word! +${data.points} pts`,
+              ? `You guessed the word! +${data.points} pts`
+              : `${data.playerName} guessed the word! +${data.points} pts`,
             type: 'correct', id: Date.now()
           }});
         }
