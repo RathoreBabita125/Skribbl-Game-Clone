@@ -122,11 +122,13 @@ input, select, textarea {
 .btn:active { transform: scale(0.97); }
 
 .btn-primary {
-  background: var(--accent-1);
+  /* background: var(--accent-1); */
+  background-color: #53e237;
   color: white;
-  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+  /* box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4); */
+  box-shadow: 0 4px 15px #53e237;
 }
-.btn-primary:hover { background: #d63451; box-shadow: 0 6px 20px rgba(233, 69, 96, 0.5); }
+.btn-primary:hover { background-color: #33a51c; box-shadow: 0 6px 20px #53e237; }
 
 .btn-secondary {
   background: rgba(255,255,255,0.1);
@@ -176,6 +178,7 @@ input, select, textarea {
   border-radius: 20px;
   font-size: 12px;
   font-weight: 700;
+  gap: 5px;
 }
 
 /* Background decorations */
