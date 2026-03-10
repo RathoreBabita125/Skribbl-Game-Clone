@@ -48,12 +48,12 @@ export default function HomePage() {
       <div className="logo-area">
         <div className="logo-img-wrap">
           {!logoError
-            ? <img src="./logo.gif" alt="Sketchly" className="logo-gif" onError={() => setLogoError(true)} />
+            ? <img src="./logo.gif" alt="skribbl" className="logo-gif" onError={() => setLogoError(true)} />
             : <h1 className="logo-text">
-                {'sketchly'.split('').map((c,i)=>(
+                {'skribbl.io'.split('').map((c,i)=>(
                   <span key={i} className="logo-letter" style={{color:LOGO_COLORS[i]}}>{c}</span>
                 ))}
-                <span className="logo-pencil">✏️</span>
+                <span className="logo-pencil"><img src="/how.gif" alt="pen" /></span>
               </h1>
           }
         </div>
