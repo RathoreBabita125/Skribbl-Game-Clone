@@ -22,13 +22,13 @@ export default function GameOver() {
         </div>
 
         <div className="game-over-header">
-          <div className="game-over-icon">{isWinner ? <img src="/cup.gif" alt="cup" /> : '🎮'}</div>
+          <div className="game-over-icon">{isWinner ? <img src="/cup.gif" alt="cup" /> : <img src="/cup.gif" alt="cup" />}</div>
           <h1>Game Over!</h1>
           {winner && (
             <div className="winner-announcement">
               <span className="winner-crown"><img src="/winner.gif" alt="winner" /></span>
               <span className="winner-name">{winner.name}</span>
-              <span className="winner-wins">wins!</span>
+              <span className="winner-wins">won the game!</span>
             </div>
           )}
         </div>
@@ -38,7 +38,7 @@ export default function GameOver() {
           {leaderboard.map((player, i) => (
             <div key={player.id} className={`final-row rank-${i+1} ${player.id === myPlayer?.id ? 'me' : ''}`}>
               <span className="final-rank">
-                {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`}
+                {i === 0 ? <img src="/medal_1.gif" alt="first" /> : i === 1 ? <img src="/medal_2.gif" alt="second" /> : i === 2 ? <img src="/medal_3.gif" alt="third" /> : `#${i+1}`}
               </span>
               <span className="final-name">
                 {player.name}
