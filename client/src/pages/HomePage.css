@@ -14,8 +14,10 @@
 .doodle-bg {
   position: fixed;
   inset: 0;
-  background-image: url('background.png');
+  background-image: url('/background.png');
   background-size: 350px;
+  pointer-events: none;
+  background-repeat: repeat; 
   pointer-events: none;
 }
 
