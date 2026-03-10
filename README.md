@@ -16,7 +16,7 @@ Follow these steps to get the app running on your machine:
 1. **Install dependencies**
    ```bash
    cd client && npm install
-   cd ../server && npm install
+   cd ./server && npm install
    ```
 2. **Start the server and client**
    Open two terminal windows/tabs:

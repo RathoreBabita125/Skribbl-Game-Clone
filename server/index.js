@@ -13,12 +13,14 @@ const allowedOrigins = process.env.CLIENT_URL
 
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    // origin: allowedOrigins,
+    origin: '*',
     methods: ['GET', 'POST']
   }
 });
 
-app.use(cors({ origin: allowedOrigins }));
+// app.use(cors({ origin: allowedOrigins }));
+app.use(cors());
 app.use(express.json());
 
 // Room registry
