@@ -15,7 +15,7 @@ class Game {
     this.currentDrawerIndex = 0;
     this.currentWord = null;
     this.wordOptions = [];
-    this.phase = 'waiting'; // waiting, word_selection, drawing, round_end, game_over
+    this.phase = 'waiting'; 
     this.timer = null;
     this.timeLeft = 0;
     this.hintsRevealed = 0;
