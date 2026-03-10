@@ -85,15 +85,15 @@ export default function GamePage() {
         </header>
 
         {/* Main layout */}
-        <div className="game-layout">
-          {/* Left: Players */}
+        <div className="game-layout"> 
           <div className="game-sidebar game-sidebar-left card">
             <div className="sidebar-title">Players</div>
             <PlayerList />
           </div>
 
-          {/* Center: Canvas + Word */}
+       
           <div className="game-center">
+
             {/* Word display */}
             <WordDisplay
               wordHint={wordHint}
@@ -114,7 +114,7 @@ export default function GamePage() {
           {/* Right: Chat */}
           <div className="game-sidebar game-sidebar-right card">
             <div className="sidebar-title">
-              {gameStatus === 'drawing' && !isDrawer ? '💬 Guess the word!' : '💬 Chat'}
+              {gameStatus === 'drawing' && !isDrawer ? <span><i class="fa-regular fa-comment"></i> Guess the word!</span> : <span><i class="fa-regular fa-comment"></i> Chat</span>}
             </div>
             <Chat />
           </div>

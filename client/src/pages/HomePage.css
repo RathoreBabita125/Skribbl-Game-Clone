@@ -85,11 +85,12 @@
 
 /* ── Card ── */
 .home-card {
-  background: #2560c0;
+  background: #022f77;
   border-radius: 8px;
   padding: 20px;
   width: 100%;
   max-width: 400px;
+  opacity: 70%;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -108,14 +109,14 @@
   font-size: 16px;
   font-family: 'Nunito', sans-serif;
   font-weight: 600;
-  background: #f0f4ff;
   color: #333;
   outline: none;
   transition: box-shadow 0.2s;
   box-sizing: border-box;
+  background-color: white;
 }
 .name-input:focus { box-shadow: 0 0 0 3px rgba(255,255,255,0.4); }
-.name-input::placeholder { color: #aab; }
+.name-input::placeholder { color: black; }
 
 /* ── Avatar picker ── */
 .av-picker {
@@ -123,7 +124,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #1e4fa0;
+  background: #003da3;
   border-radius: 6px;
   padding: 16px 10px;
   position: relative;
@@ -214,7 +215,7 @@
 .btn-private {
   width: 100%;
   padding: 12px;
-  background: #4da6e8;
+  background: #2c8de7;
   color: white;
   font-family: 'Fredoka One', cursive;
   font-size: 17px;
@@ -260,7 +261,7 @@
 @keyframes popin  { 0%{transform:scale(0.88);opacity:0} 70%{transform:scale(1.04)} 100%{transform:scale(1);opacity:1} }
 
 .modal {
-  background: #2560c0;
+  background: #013181;
   border-radius: 10px;
   padding: 28px 24px;
   width: 90%;
