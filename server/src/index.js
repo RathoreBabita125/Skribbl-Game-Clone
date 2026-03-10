@@ -58,7 +58,7 @@ setInterval(() => {
 io.on('connection', (socket) => {
   console.log(`[Socket] Connected: ${socket.id}`);
 
-  // ─── Room Events ─────────────────────────────────────────────
+  //  Room Events
   socket.on('create_room', ({ playerName, settings, isPrivate, avatar }) => {
     try {
       const room = new Room(playerName, settings || {}, isPrivate || false);
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
         return;
       }
 
-      // const result = room.addPlayer(socket.id, playerName);
+      
       const result = room.addPlayer(socket.id, playerName, avatar);
       if (result.error) {
         socket.emit('error', { message: result.error });
@@ -170,7 +170,7 @@ io.on('connection', (socket) => {
     });
   });
 
-  // ─── Word Events ─────────────────────────────────────────────
+  //  Word Events 
   socket.on('word_chosen', ({ word }) => {
     const room = rooms.get(socket.data.roomId);
     if (!room) return;
@@ -178,7 +178,7 @@ io.on('connection', (socket) => {
     room.wordChosen(word, socket.id);
   });
 
-  // ─── Drawing Events ───────────────────────────────────────────
+  //  Drawing Events 
   socket.on('draw_start', (data) => {
     const room = rooms.get(socket.data.roomId);
     if (!room) return;
@@ -209,7 +209,7 @@ io.on('connection', (socket) => {
     room.handleUndo(socket.id);
   });
 
-  // ─── Chat & Guessing ──────────────────────────────────────────
+  //  Chat & Guessing 
   socket.on('guess', ({ text }) => {
     const room = rooms.get(socket.data.roomId);
     if (!room) return;
@@ -227,7 +227,7 @@ io.on('connection', (socket) => {
       // Drawer sends chat
       room.handleChat(socket.id, text);
     } else if (player.hasGuessedCorrectly) {
-      // Already guessed correctly, chat only
+      // Already guessed correctly
       room.handleChat(socket.id, text);
     } else {
       room.handleGuess(socket.id, text);
@@ -240,7 +240,7 @@ io.on('connection', (socket) => {
     room.handleChat(socket.id, text);
   });
 
-  // ─── Disconnect ───────────────────────────────────────────────
+  //  Disconnect
   socket.on('disconnect', () => {
     console.log(`[Socket] Disconnected: ${socket.id}`);
     const room = rooms.get(socket.data.roomId);
