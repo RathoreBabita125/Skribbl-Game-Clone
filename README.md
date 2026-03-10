@@ -4,6 +4,10 @@ Welcome to this playful take on the classic drawing-and-guessing party game. Her
 
 The project is split between a React-powered client and a Node.js server, with both sides talking through WebSockets. Whether you want to tinker with the UI, add new features or just run it locally for a little entertainment, this repo has everything you need.
 
+## 🔗 Live Demo
+
+ [https://skribbl-game-client.vercel.app/](https://skribbl-game-client.vercel.app/)
+
 ##  What's Inside
 
 - **Client** (`client/`): A Vite-based React app that handles the user interface, drawing canvas, chat, and game flow.
@@ -29,7 +33,7 @@ Follow these steps to get the app running on your machine:
 3. **Open your browser** and navigate to the URL shown by Vite (usually `http://localhost:5173`).
 4. **Create or join a room**, invite friends, and start drawing!
 
->  The server will log useful messages when rooms are created or players connect. Check the terminal if something isn’t working.
+>  The server will log useful messages when rooms are created or players connect. Check the terminal if something isn't working.
 
 ##  How the Game Works
 
@@ -49,11 +53,10 @@ client/        # React code
       ├─ components/  # UI pieces (canvas, chat, player list...)
       └─ context/     # React contexts for game/socket state
 server/        # Node.js API
-  ├─ src/
-      ├─ Game.js    # core game logic
-      ├─ Room.js    # room management
-      ├─ Player.js  # player helper
-      └─ words.js   # word list used for rounds
+  ├─ Game.js    # core game logic
+  ├─ Room.js    # room management
+  ├─ Player.js  # player helper
+  └─ words.js   # word list used for rounds
 ```
 
 ## Contributing
@@ -64,11 +67,3 @@ Want to improve the game? Great! Here are a few guidelines:
 2. Stick to the existing coding style and react component patterns.
 3. Add basic tests if you can.
 4. Open a pull request and describe your changes.
-
-Issues and suggestions are welcome; feel free to open one if you run into trouble or have an idea.
-
-##  License
-
-This project is provided under the [MIT License](LICENSE). Use it, modify it and share it freely.
-
-Happy drawing and guessing! 😄
