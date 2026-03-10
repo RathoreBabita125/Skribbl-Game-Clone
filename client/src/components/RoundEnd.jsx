@@ -8,7 +8,7 @@ export default function RoundEnd({ word, leaderboard, reason, currentRound, tota
         <div className="round-end-header">
           <span className="round-badge">Round {currentRound} / {totalRounds}</span>
           <h2>
-            {reason === 'all_guessed' ? '🎉 Everyone guessed it!' : '⏰ Time\'s up!'}
+            {reason === 'all_guessed' ? ' Everyone guessed it!' : ' Time\'s up!'}
           </h2>
           <div className="the-word">
             The word was: <span className="word-reveal-text">{word}</span>
@@ -20,7 +20,7 @@ export default function RoundEnd({ word, leaderboard, reason, currentRound, tota
           {leaderboard.map((player, i) => (
             <div key={player.id} className={`lb-row rank-${i + 1}`}>
               <span className="lb-rank">
-                {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}
+                {i === 0 ? <img src="/medal_1.gif" alt="first" /> : i === 1 ? <img src="/medal_2.gif" alt="second" /> : i === 2 ? <img src="/medal_3.gif" alt="third" /> : `#${i + 1}`}
               </span>
               <span className="lb-name">{player.name}</span>
               <span className="lb-score">{player.score}</span>
