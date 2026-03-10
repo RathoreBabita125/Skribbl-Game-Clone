@@ -25,6 +25,11 @@ app.use(express.json());
 const rooms = new Map(); // roomId -> Room
 
 // API Routes
+
+app.get('/',(req, res)=>{
+  res.send('Skribbl Game Server is running');
+})
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', rooms: rooms.size });
 });
